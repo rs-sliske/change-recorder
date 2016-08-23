@@ -49,10 +49,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function createPost(array $args = [])
     {
-        $post = new Post;
-        $post->title = array_key_exists('title', $args) ? $args['title'] : $this->fake->sentence;        
+        $post = new Post();
+        $post->title = array_key_exists('title', $args) ? $args['title'] : $this->fake->sentence;
         $post->content = array_key_exists('content', $args) ? $args['content'] : $this->fake->paragraph;
         $post->save();
+
         return $post;
     }
 
