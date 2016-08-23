@@ -2,33 +2,32 @@
 
 use Faker\Factory as Faker;
 use Illuminate\Database\Capsule\Manager as DB;
-
-
 use RMoore\ChangeRecorder\Change;
-
 use RMoore\ChangeRecorder\RecordsChanges;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     public $fake;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->fake = Faker::create();
         $this->setUpDatabase();
         $this->migrateTables();
     }
 
-    public function setUpDatabase(){
-        $database = new DB;
+    public function setUpDatabase()
+    {
+        $database = new DB();
 
         $database->addConnection(['driver' => 'sqlite', 'database' => ':memory:']);
         $database->bootEloquent();
         $database->setAsGlobal();
     }
 
-    public function migrateTables(){
-
-        DB::schema()->create('posts', function($table){
+    public function migrateTables()
+    {
+        DB::schema()->create('posts', function ($table) {
             $table->increments('id');
             $table->string('title');
             $table->text('content');
@@ -48,14 +47,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         });
     }
 
-    public function createPost(array $args = []){
+    public function createPost(array $args = [])
+    {
         return Post::create(array_merge([
-            'title' => $this->fake->sentence,
+            'title'   => $this->fake->sentence,
             'content' => $this->fake->paragraph,
         ], $args));
     }
 
-    public function createChange(array $args = []){
+    public function createChange(array $args = [])
+    {
         return Change::create(array_merge([
             'subject_id'   => 1,
             'subject_type' => Post::class,
@@ -63,17 +64,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             'user_id'      => 1,
             'before'       => [],
             'after'        => [
-                'title' => $this->fake->sentence,
+                'title'   => $this->fake->sentence,
                 'content' => $this->fake->paragraph,
             ],
         ], $args));
     }
-
 }
 
 
-class Post extends \Illuminate\Database\Eloquent\Model {
-
+class Post extends \Illuminate\Database\Eloquent\Model
+{
     use RecordsChanges;
 
     protected $fillable = ['title', 'content'];
