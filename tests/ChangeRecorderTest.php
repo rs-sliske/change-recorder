@@ -24,6 +24,9 @@ class ChangeRecorderTest extends TestCase
     /** @test */
     public function a_model_has_changes()
     {
+        Post::created(function ($post) {
+            var_dump('creating post : '.$post->title);
+        });
         $post = $this->createPost();
 
         $this->assertEquals(Change::count(), 1);
