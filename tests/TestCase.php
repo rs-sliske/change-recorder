@@ -1,42 +1,80 @@
 <?php
 
 use Faker\Factory as Faker;
+use Illuminate\Database\Capsule\Manager as DB;
+
+
+use RMoore\ChangeRecorder\Change;
+
+use RMoore\ChangeRecorder\RecordsChanges;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
-    // /**
-    //  * The base URL to use while testing the application.
-    //  *
-    //  * @var string
-    //  */
-    // protected $baseUrl = 'http://localhost';
+    public $fake;
 
-    // *
-    //  * Creates the application.
-    //  *
-    //  * @return \Illuminate\Foundation\Application
-
-    // public function createApplication()
-    // {
-    //     $app = require __DIR__.'/../bootstrap/app.php';
-
-    //     $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-
-    //     return $app;
-    // }
-
-    protected $fake;
-    protected $times = 1;
-
-    public function __construct()
-    {
+    public function setUp(){
         $this->fake = Faker::create();
+        $this->setUpDatabase();
+        $this->migrateTables();
     }
 
-    protected function times($count)
-    {
-        $this->times = $count;
+    public function setUpDatabase(){
+        $database = new DB;
 
-        return $this;
+        $database->addConnection(['driver' => 'sqlite', 'database' => ':memory:']);
+        $database->bootEloquent();
+        $database->setAsGlobal();
     }
+
+    public function migrateTables(){
+
+        DB::schema()->create('posts', function($table){
+            $table->increments('id');
+            $table->string('title');
+            $table->text('content');
+            $table->timestamps();
+        });
+
+        DB::schema()->create('changes', function ($table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('subject_id')->unsigned();
+            $table->string('subject_type');
+            $table->string('event_name');
+            $table->text('before')->nullable();
+            $table->text('after')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    public function createPost(array $args = []){
+        return Post::create(array_merge([
+            'title' => $this->fake->sentence,
+            'content' => $this->fake->paragraph,
+        ], $args));
+    }
+
+    public function createChange(array $args = []){
+        return Change::create(array_merge([
+            'subject_id'   => 1,
+            'subject_type' => Post::class,
+            'event_name'   => 'created_post',
+            'user_id'      => 1,
+            'before'       => [],
+            'after'        => [
+                'title' => $this->fake->sentence,
+                'content' => $this->fake->paragraph,
+            ],
+        ], $args));
+    }
+
+}
+
+
+class Post extends \Illuminate\Database\Eloquent\Model {
+
+    use RecordsChanges;
+
+    protected $fillable = ['title', 'content'];
 }
