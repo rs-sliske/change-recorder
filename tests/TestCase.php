@@ -4,6 +4,8 @@ use Faker\Factory as Faker;
 use Illuminate\Database\Capsule\Manager as DB;
 use RMoore\ChangeRecorder\Change;
 use RMoore\ChangeRecorder\RecordsChanges;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Container\Container;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -21,6 +23,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $database = new DB();
 
         $database->addConnection(['driver' => 'sqlite', 'database' => ':memory:']);
+        $database->setEventDispatcher(new Dispatcher(new Container));
         $database->bootEloquent();
         $database->setAsGlobal();
     }
