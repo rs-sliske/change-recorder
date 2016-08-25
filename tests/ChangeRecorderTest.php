@@ -60,11 +60,8 @@ class ChangeRecorderTest extends TestCase
         $post->title = 'new title';
         $post->content = 'new content';
 
-        // sleep(2);
 
         $post->save();
-
-        // dd($post->changes->last()->toArray());
 
         $this->assertEquals($post->changes->last()->event_name, 'updated_post');
     }
