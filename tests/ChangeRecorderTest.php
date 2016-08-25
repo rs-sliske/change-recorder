@@ -66,7 +66,8 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_all_history(){
+    public function it_can_get_all_history()
+    {
         $post = $this->createPost();
         $post->title = 'new title';
         $post->content = 'new content';
@@ -77,7 +78,6 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_history_with_field_parameter(){
         $post = $this->createPost();
         $post->title = 'new title';
         $post->save();
@@ -87,6 +87,8 @@ class ChangeRecorderTest extends TestCase
     }
     /** @test */
     public function it_can_get_history_with_magic_method(){
+    public function it_can_get_history_with_magic_method()
+    {
         $post = $this->createPost();
         $post->title = 'new title';
         $post->save();
