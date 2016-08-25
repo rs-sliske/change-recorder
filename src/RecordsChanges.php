@@ -100,6 +100,7 @@ trait RecordsChanges
         $matches = [];
         if (preg_match('/(?:get)?(.+)(?=History)/', $method, $matches)) {
             $attr = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $matches[1]));
+
             return $this->getHistory($attr);
         }
     }
