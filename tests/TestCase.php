@@ -7,13 +7,16 @@ use RMoore\ChangeRecorder\RecordsChanges;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 
-class Auth {
-    public function id(){
+class Auth
+{
+    public function id()
+    {
         return 0;
     }
 }
 
-function auth(){
+function auth()
+{
     return new Auth;
 }
 
@@ -103,5 +106,3 @@ class Post extends \Illuminate\Database\Eloquent\Model
 
     protected $fillable = ['title', 'content'];
 }
-
-
