@@ -87,6 +87,7 @@ class ChangeRecorderTest extends TestCase
         $history = $post->getHistory('title');
         $this->assertCount(1, $history);
     }
+
     /** @test */
     public function it_can_get_history_with_magic_method()
     {
@@ -98,4 +99,3 @@ class ChangeRecorderTest extends TestCase
         $this->assertCount(1, $history);
     }
 }
-
