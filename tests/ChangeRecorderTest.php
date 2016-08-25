@@ -35,13 +35,15 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_names_created_events_correctly(){
+    public function it_names_created_events_correctly()
+    {
         $post = $this->createPost();
         $this->assertEquals($post->changes->last()->event_name, 'created_post');
     }
 
     /** @test */
-    public function it_names_updated_events_correcty_when_a_single_field_is_changed(){
+    public function it_names_updated_events_correcty_when_a_single_field_is_changed()
+    {
         $post = $this->createPost();
 
         $post->title = 'new title';
@@ -51,7 +53,8 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_names_updated_events_correcty_when_multiple_fields_are_changed(){
+    public function it_names_updated_events_correcty_when_multiple_fields_are_changed()
+    {
         $post = $this->createPost();
 
         $post->title = 'new title';
@@ -63,7 +66,8 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_all_history(){
+    public function it_can_get_all_history()
+    {
         $post = $this->createPost();
         $post->title = 'new title';
         $post->content = 'new content';
@@ -74,7 +78,8 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_history_with_field_parameter(){
+    public function it_can_get_history_with_field_parameter()
+    {
         $post = $this->createPost();
         $post->title = 'new title';
         $post->save();
@@ -84,7 +89,8 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_history_with_magic_method(){
+    public function it_can_get_history_with_magic_method()
+    {
         $post = $this->createPost();
         $post->title = 'new title';
         $post->save();
