@@ -24,16 +24,14 @@ class ChangeRecorderTest extends TestCase
     /** @test */
     public function a_model_has_changes()
     {
-        Post::created(function ($post) {
-            var_dump('creating post : '.$post->title);
-        });
+
         $post = $this->createPost();
 
-        $this->assertEquals(Change::count(), 1);
+        $this->assertCount(1, $post->fresh()->changes);
 
         $post->title = 'new title';
         $post->save();
 
-        $this->assertEquals(Change::count(), 2);
+        $this->assertCount(2, $post->fresh()->changes);
     }
 }
