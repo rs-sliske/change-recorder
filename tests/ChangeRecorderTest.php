@@ -24,7 +24,6 @@ class ChangeRecorderTest extends TestCase
     /** @test */
     public function a_model_has_changes()
     {
-
         $post = $this->createPost();
 
         $this->assertCount(1, $post->fresh()->changes);
