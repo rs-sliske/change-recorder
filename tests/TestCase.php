@@ -7,6 +7,16 @@ use RMoore\ChangeRecorder\RecordsChanges;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 
+class Auth {
+    public function id(){
+        return 0;
+    }
+}
+
+function auth(){
+    return new Auth;
+}
+
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     public $fake;
@@ -16,9 +26,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->fake = Faker::create();
         $this->setUpDatabase();
         $this->migrateTables();
+        $this->resetEvents();
     }
 
-    public function setUpDatabase()
+    private function setUpDatabase()
     {
         $database = new DB();
 
@@ -28,7 +39,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $database->setAsGlobal();
     }
 
-    public function migrateTables()
+    private function migrateTables()
     {
         DB::schema()->create('posts', function ($table) {
             $table->increments('id');
@@ -48,6 +59,15 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             $table->timestamps();
             $table->softDeletes();
         });
+    }
+
+    private function resetEvents()
+    {
+        Change::flushEventListeners();
+        Change::boot();
+
+        Post::flushEventListeners();
+        Post::boot();
     }
 
     public function createPost(array $args = [])
@@ -83,3 +103,5 @@ class Post extends \Illuminate\Database\Eloquent\Model
 
     protected $fillable = ['title', 'content'];
 }
+
+
