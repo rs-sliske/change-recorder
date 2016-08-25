@@ -78,6 +78,8 @@ class ChangeRecorderTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_history_with_parameter()
+    {
         $post = $this->createPost();
         $post->title = 'new title';
         $post->save();
@@ -86,7 +88,6 @@ class ChangeRecorderTest extends TestCase
         $this->assertCount(1, $history);
     }
     /** @test */
-    public function it_can_get_history_with_magic_method(){
     public function it_can_get_history_with_magic_method()
     {
         $post = $this->createPost();
