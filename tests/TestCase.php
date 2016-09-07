@@ -13,7 +13,7 @@ class Auth
 
     public static function instance()
     {
-        return static::$instance ?: new Auth;
+        return static::$instance ?: new self;
     }
 
     private function __construct()

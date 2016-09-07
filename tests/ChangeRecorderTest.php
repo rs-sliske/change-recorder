@@ -121,5 +121,5 @@ class ChangeRecorderTest extends TestCase
         $collaborators = $post->collaboratorIds();
         $this->assertEquals($collaborators->first(), 1);
         $this->assertEquals($collaborators->last(), 2);
-    }   
+    }
 }
