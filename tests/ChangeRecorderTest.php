@@ -133,7 +133,7 @@ class ChangeRecorderTest extends TestCase
 
         $history = $post->searchHistory('title');
 
-        $this->assertCount(1,$history); 
+        $this->assertCount(1, $history);
     }
 
     /** @test */
@@ -146,7 +146,7 @@ class ChangeRecorderTest extends TestCase
 
         $history = $post->searchTitleHistory();
 
-        $this->assertCount(1,$history);
+        $this->assertCount(1, $history);
     }
 
     /** @test */
@@ -159,7 +159,7 @@ class ChangeRecorderTest extends TestCase
 
         $history = $post->getHistory('title', true);
 
-        $this->assertCount(1,$history); 
+        $this->assertCount(1, $history);
     }
 
     /** @test */
@@ -172,6 +172,6 @@ class ChangeRecorderTest extends TestCase
 
         $history = $post->getTitleHistory(true);
 
-        $this->assertCount(1,$history); 
+        $this->assertCount(1, $history);
     }
 }

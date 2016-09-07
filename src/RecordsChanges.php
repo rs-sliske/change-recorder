@@ -86,8 +86,9 @@ trait RecordsChanges
             return $this->changes;
         }
 
-        if($deep)
+        if ($deep) {
             return $this->searchHistory($field);
+        }
 
         $res = [];
         $class = $this->getShortClassName();
@@ -101,7 +102,7 @@ trait RecordsChanges
             return $this->changes;
         }
 
-        return $this->changes->filter(function($value, $key) use ($field){
+        return $this->changes->filter(function ($value, $key) use ($field) {
             return array_key_exists($field, $value->after);
         });
     }
@@ -117,7 +118,7 @@ trait RecordsChanges
     {
         //check for history
         $matches = [];
-        if (preg_match('/(?:(?:get)|(?:search))?(.+)(?=History)/', $method, $matches)) { 
+        if (preg_match('/(?:(?:get)|(?:search))?(.+)(?=History)/', $method, $matches)) {
             $attr = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $matches[1]));
 
             $deep = (count($parameters) >= 1 && $parameters[0]) ?: preg_match('/search/i', $method);
