@@ -174,5 +174,4 @@ class ChangeRecorderTest extends TestCase
 
         $this->assertCount(1, $history);
     }
-
 }

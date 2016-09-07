@@ -18,12 +18,13 @@ class ChangeRecorderServiceProvider extends ServiceProvider
             __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
 
-        Router::macro('history', function($name, $class){
-            $this->get($name.'/history', function() use ($class){
+        Router::macro('history', function ($name, $class) {
+            $this->get($name.'/history', function () use ($class) {
                 return $class::all();
             });
-            $this->get($name.'{key}/history', function($key) use ($class){
+            $this->get($name.'{key}/history', function ($key) use ($class) {
                 $field = (new $class)->getRouteKeyName() ?: 'id';
+
                 return $class::where($field, $key);
             });
         });
@@ -38,5 +39,4 @@ class ChangeRecorderServiceProvider extends ServiceProvider
     {
         //
     }
-
 }
