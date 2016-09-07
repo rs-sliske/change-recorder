@@ -29,7 +29,7 @@ class Auth
         return $this->id;
     }
 
-    public function loginUsingId(int $id)
+    public function loginUsingId($id)
     {
         $this->id = $id;
     }
