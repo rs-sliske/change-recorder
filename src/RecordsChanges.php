@@ -79,7 +79,7 @@ trait RecordsChanges
 
         return $this->belongsToMany($userClass, 'changes')
             ->withTimestamps()
-            ->withPivot('event_name','before', 'after');
+            ->withPivot('event_name', 'before', 'after');
     }
 
     public function getHistory($field = null, $deep = false)
