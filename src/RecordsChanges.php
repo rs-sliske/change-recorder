@@ -23,14 +23,14 @@ trait RecordsChanges
             $user = 0;
         }
 
-        Change::create([
-            'subject_id'   => $this->id,
-            'subject_type' => get_class($this),
-            'event_name'   => $this->getEventName($this, $event, array_keys($changed)),
-            'user_id'      => $user,
-            'before'       => $before,
-            'after'        => $changed,
-        ]);
+        //Change::create([
+        //    'subject_id'   => $this->id,
+         //   'subject_type' => get_class($this),
+         //   'event_name'   => $this->getEventName($this, $event, array_keys($changed)),
+        //    'user_id'      => $user,
+        //    'before'       => $before,
+        //    'after'        => $changed,
+       // ]);
     }
 
     private function getShortClassName()
